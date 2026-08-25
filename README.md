@@ -1,59 +1,77 @@
-> # ESP32 Captive Portal with Login Logging | Evil Portal
+<p align="center">
+ <img src="https://www.media-underground.net/images/wifi.png">
+</p>
 
-### --- CHANGES TO ORIGINAL REPOSITORY IN PROGRESS --- ###
+<h3 align="center">ESP32 EVIL PORTABLE PORTAL</h3>
 
- ## Overview
-This project is an ESP32-based **Captive Portal** that forces users to enter their credentials (email and password) before accessing the internet. It logs the entered credentials and provides an **Admin Panel** to view stored logins.
+<div align="center">
 
-## Features
-- **Captive Portal**: Redirects all user traffic to the login page.
-- **WiFi Access Point**: The ESP32 acts as an open or password-protected access point.
-- **DNS Redirection**: Ensures all web requests go to the login page.
-- **Login Page**: HTML-based page where users enter credentials.
-- **Admin Panel**: Displays stored credentials and allows clearing logs.
-- **Redirect After Login**: Users are excluded from registration with the message “Something went wrong”.
+[![Status](https://img.shields.io/badge/status-active-success.svg)]()
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
-## Hardware Requirements
-- ESP32-WROOM-32 (Compatible with ESP32-WROOM-32D, ESP32-WROOM-32E, ESP32-WROVER)
-- Micro USB cable
-- Computer for flashing firmware
+</div>
 
-## Installation
-### Flashing the ESP32
-#### Using Arduino IDE
-1. Install **Arduino IDE** and add the ESP32 board support package:
-   - Open Arduino IDE.
-   - Go to **File > Preferences**.
-   - In **Additional Board Manager URLs**, add:  
-     `https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json`
-   - Go to **Tools > Board > Board Manager** and install **esp32 by Espressif Systems**.
+---
 
-2. Install required libraries via the **Library Manager**:
-   - **ESPAsyncWebServer**
-   - **DNSServer**
+<p align="center"> 
+This project involves creating a portable waterproof device that uses an ESP32 microcontroller to function as a fake Wi-Fi access point for use in red team cybersecurity operations.
+    <br> 
+</p>
 
-3. Download the preconfigured **evilportal_esp32.ide** file from the repository.
-- Open Arduino IDE and go to File > Open.
-- Select the downloaded .ide file.
+## Disclaimer 
+This tool is strictly for educational purposes only. The author does not take responsibility for any illegal activity undertaken from the misuse of this software.
 
-4. Compile and upload the code to your ESP32.
 
-## Usage
-1. Connect to the WiFi network broadcasted by the ESP32.
-2. Open any web page – you will be redirected to the login portal.
-3. Enter email and password.
-4. Credentials are logged and accessible via `/admin` (default password: `admin`).
-5. Admin can view and clear logs.
+## Introduction
+This project includes source code for a Captive Portal with the following requirements:
 
-## Configuration
-Modify `config.h` to change WiFi name, password, redirect URL, and admin credentials.
+- <b>Captive Portal</b>
 
-> ## Security Considerations
-This project **does not encrypt** login credentials. Do not use it for sensitive applications.
+  <i>Redirects all user traffic to the login page.</i>
 
-> ## License
-This project is licensed under the MIT License.
+- <b>WiFi Access Point</b>
 
-> ## Disclaimer
-This project is for educational purposes only. The author is not responsible for any misuse of the software.
+  <i>The ESP32 acts as an open or password-protected access point.</i>
+
+- <b>DNS Redirection</b>
+
+  <i>Ensures all web requests go to the login page.</i>
+  
+- <b>Login Page</b>
+
+  <i>HTML-based page where users enter credentials.</i>
+  
+- <b>Admin Panel</b>
+
+  <i>Displays stored credentials and allows clearing logs.</i>
+  
+- <b>Redirect After Login</b>
+
+  <i>Users are excluded from registration with the message "Something went wrong".</i>
+
+## Hardware
+
+1. ESP32 Module
+2. Programming Cable
+3. 18650 Battery
+4. 18650 Battery Holder
+5. TC4056/TP4056 Charging Module
+6. Waterproof Push Button Switch
+7. Waterproof USB-C Socket
+8. Waterproof Project Box
+
+## Software
+
+[ArduinoIDE](https://www.arduino.cc/en/software) - For Programming The Device.
+
+## Operation
+
+1. Switch on the device.
+2. Connect to the WiFi access point "((TEST))" being broadcasted by the ESP32.
+3. You will be redirected to the login portal.
+4. Enter email and password.
+5. Credentials are logged and accessible via http://8.8.8.8/admin (default password: "admin").
+6. Admin can view and clear logs.
+
+<i>...Still under construction. More details to follow.</i>
 
