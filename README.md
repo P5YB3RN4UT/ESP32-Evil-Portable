@@ -51,7 +51,7 @@ This project includes source code for a Captive Portal with the following requir
 
 ## Hardware
 
-1. ESP32 Module
+1. ESP32-WROOM-32 (Compatible with ESP32-WROOM-32D, ESP32-WROOM-32E, ESP32-WROVER)
 2. Programming Cable
 3. 18650 Battery
 4. 18650 Battery Holder
