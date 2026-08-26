@@ -50,7 +50,7 @@ This project includes source code for a Captive Portal with the following requir
 
 ## Overall Concept
 
-The basic idea was to create a standalone 'Evil Portal' device that is sufficiently affordable that losing one shouldn't be an issue. Most devices that can run this feature come bundled with other features (for example, the LilyGO T-Embed CC1101 or Cardputer ADV running Bruce Firmware) where deployment and loss of the device is undesirable. Also, deployment of these other devices under different weather conditions is impractical and unrealistic, hence the standalone 'ESP32 Evil Portable'.
+The basic idea was to create a standalone 'Evil Portal' device so sufficiently affordable that losing one shouldn't be an issue. Most devices that can run this feature come bundled with other features (for example, the LilyGO T-Embed CC1101 or Cardputer ADV running Bruce Firmware) where deployment and loss of the device is undesirable. Also, deployment of these other devices under different weather conditions is impractical and unrealistic, hence the standalone 'ESP32 Evil Portable'.
 
 ## Hardware
 
