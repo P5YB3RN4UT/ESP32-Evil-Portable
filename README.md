@@ -67,6 +67,28 @@ The basic idea was to create a standalone 'Evil Portal' device so sufficiently a
 
 [ArduinoIDE](https://www.arduino.cc/en/software) - For Programming The Device.
 
+## Installation
+Flashing the ESP32:
+1. Install **Arduino IDE** and add the ESP32 board support package:
+   - Open **Arduino IDE**.
+   - Go to **File > Preferences**.
+   - In **Additional Board Manager URLs**, add:  
+       https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+   - Go to **Tools > Board > Board Manager** and install **esp32 by Espressif Systems**
+       Ensure you install version 2.0.17 and not a later release.
+
+2. Install required libraries via the **Library Manager**:
+   - **ESPAsyncWebServer**
+   - **DNSServer**
+
+3. Download the **ESP32-Evil-Portable** Repository and unzip the contents to the Arduino folder.
+   - Open **Arduino IDE** and go to **File > Open**.
+   - Select the downloaded main.ino file.
+
+4. Lines 7 and 11 of the code can be modified to change the SSID and Admin Pin if so desired.
+
+5. Compile and upload the code to your ESP32.
+
 ## Operation
 
 1. Switch on the device.
