@@ -49,6 +49,14 @@ This project includes source code for a Captive Portal with the following requir
 
   <i>Users are excluded from registration with the message "Something went wrong".</i>
 
+- <b>Data Retention</b>
+
+  <i>Stored credentials must survive a power cycle using the ESP32's Non-Volatile Storage ability, so that when the device is deployed in the field and the battery has eventually drained, any data can later be retrieved after recovery and recharge.</i>
+
+- <b>Waterproofing</b>
+
+  <i>The device needs to be sufficiently waterproof in order to be deployed virtually anywhere regardless of weather conditions.</i>
+
 ## Hardware
 
 1. ESP32-WROOM-32 (Compatible with ESP32-WROOM-32D, ESP32-WROOM-32E, ESP32-WROVER)
