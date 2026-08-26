@@ -2,7 +2,7 @@
  <img src="https://www.media-underground.net/images/wifi.png">
 </p>
 
-<h3 align="center">ESP32 EVIL PORTABLE PORTAL</h3>
+<h3 align="center">ESP32 EVIL PORTABLE</h3>
 
 <div align="center">
 
@@ -13,10 +13,8 @@
 
 ---
 
-<p align="center"> 
-This project involves creating a portable waterproof device that uses an ESP32 microcontroller to function as a fake Wi-Fi access point for use in red team cybersecurity operations.
-    <br> 
-</p>
+## Summary
+This project involves creating a portable waterproof device that uses an ESP32 microcontroller to function as a fake WiFi access point for use in red team cybersecurity operations.
 
 ## Disclaimer 
 This tool is strictly for educational purposes only. The author does not take responsibility for any illegal activity undertaken from the misuse of this software.
