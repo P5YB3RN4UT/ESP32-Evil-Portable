@@ -98,5 +98,8 @@ Flashing the ESP32:
 5. Credentials are logged and accessible via http://8.8.8.8/admin (default password: "admin").
 6. Admin can view and clear logs.
 
-<i>...Still under construction. More details to follow.</i>
+## Photos
+
+<img src="https://www.media-underground.net/images/evil_portable01.jpg">
+<img src="https://www.media-underground.net/images/evil_portable02.jpg">
 
