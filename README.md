@@ -72,7 +72,7 @@ Additional:
 1. Perfboard
 2. Pin Headers
 3. LEDs For Battery Charge Status
- - <i>Note: Remove and replace 1 or 2 of the charging module's surface mount LEDs with 2 pin round head LEDS if you wish to see either battery charging, battery charged, or both from the outside of the housing. Alternatively, if you're careful, you can wire the round head LEDs in parallel with the onboard surface mount LEDS.</i>
+ - <i>Note: Remove and replace 1 or 2 of the charging module's surface mount LEDs with 2 pin round head LEDS if you wish to see either battery charging, battery charged, or both from the outside of the housing. Alternatively, if you're careful, you can wire the round head LEDs in parallel with the onboard surface mount LEDs.</i>
 
 
 ## Software
