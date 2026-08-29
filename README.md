@@ -6,8 +6,10 @@
 
 ---
 
+
 ## Summary
 This project involves creating a portable waterproof device that uses an ESP32 microcontroller to function as a fake WiFi access point for use in red team cybersecurity operations.
+
 
 ## Disclaimer 
 This tool is strictly for educational purposes only. The author does not take responsibility for any illegal activity undertaken from the misuse of this software.
@@ -48,12 +50,15 @@ This project includes source code for a Captive Portal with the following requir
 
   <i>The device needs to be sufficiently waterproofed in order to be deployed virtually anywhere regardless of weather conditions.</i>
 
+
 ## Overall Concept
 
 The basic idea was to create a standalone 'Evil Portal' device so sufficiently affordable that losing one shouldn't be an issue. Most devices that can run this feature come bundled with other features (for example, the LilyGO T-Embed CC1101 or M5Stack Cardputer ADV running Bruce Firmware) where deployment and loss of the device is undesirable. Also, deployment of these other devices under different weather conditions is impractical and unrealistic, hence the standalone 'ESP32 Evil Portable'.
 
+
 ## Hardware
 
+Required:
 1. ESP32-WROOM-32 (Compatible with ESP32-WROOM-32D, ESP32-WROOM-32E, ESP32-WROVER)
 2. Programming Cable
 3. 18650 Battery
@@ -63,9 +68,29 @@ The basic idea was to create a standalone 'Evil Portal' device so sufficiently a
 7. Waterproof USB-C Socket
 8. Waterproof Project Box
 
+Additional:
+1. Perfboard
+2. Pin Headers
+3. LEDs For Battery Charge Status
+ - <i>Note: Remove and replace 1 or 2 of the charging module's surface mount LEDs with 2 pin round head LEDS if you wish to see either battery charging, battery charged, or both from the outside of the housing.</i>
+
+
 ## Software
 
 [ArduinoIDE](https://www.arduino.cc/en/software) - For Programming The Device.
+
+
+## Pinout
+
+| 18650 Battery | TC/TP4056 Charging Module | ESP32-WROOM-32 | USB-C Socket |
+|:---:|:---:|:---:|:---:|
+| + | B + |  |  |
+| -	| B - |  |  |
+|  	| OUT + | 3V3 |  |
+|  	| OUT - | GND |  |
+|  	| IN + |  | RED WIRE |
+|  	| IN - |  | BLACK WIRE |
+
 
 ## Installation
 Flashing the ESP32:
@@ -88,6 +113,7 @@ Flashing the ESP32:
 
 5. Compile and upload the code to your ESP32.
 
+
 ## Operation
 
 1. Switch on the device.
@@ -96,6 +122,7 @@ Flashing the ESP32:
 4. Enter email and password.
 5. Credentials are logged and accessible via http://8.8.8.8/admin (default password: "admin").
 6. Admin can view and clear logs.
+
 
 ## Photos
 
