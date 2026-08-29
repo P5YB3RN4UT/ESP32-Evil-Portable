@@ -40,7 +40,7 @@ This project includes source code for a Captive Portal with the following requir
   
 - <b>Redirect After Login</b>
 
-  <i>Users are excluded from registration with the message "Something went wrong".</i>
+  <i>Users are excluded from registration with the message "Error logging in. Please try again later."</i>
 
 - <b>Data Retention</b>
 
