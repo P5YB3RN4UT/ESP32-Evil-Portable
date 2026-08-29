@@ -128,4 +128,5 @@ Flashing the ESP32:
 
 <img src="https://www.media-underground.net/images/evil_portable01.jpg">
 <img src="https://www.media-underground.net/images/evil_portable02.jpg">
+<img src="https://www.media-underground.net/images/evil_portable03.jpg">
 
