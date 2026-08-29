@@ -74,8 +74,7 @@ Flashing the ESP32:
    - Go to **File > Preferences**.
    - In **Additional Board Manager URLs**, add:  
        https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
-   - Go to **Tools > Board > Board Manager** and install **esp32 by Espressif Systems**
-       Ensure you install version 2.0.17 and not a later release.
+   - Go to **Tools > Board > Board Manager** and install **esp32 by Espressif Systems** (<i>Note: Ensure you install version 2.0.17 and not a later release</i>).
 
 2. Install required libraries via the **Library Manager**:
    - **ESPAsyncWebServer**
