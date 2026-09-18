@@ -1,5 +1,5 @@
 <p align="center">
- <img src="https://www.media-underground.net/images/wifi.png">
+ <img src="https://raw.githubusercontent.com/P5YB3RN4UT/ESP32-Evil-Portable/master/img/wifi.png">
 </p>
 
 <h3 align="center">ESP32 EVIL PORTABLE</h3>
@@ -126,8 +126,7 @@ Flashing the ESP32:
 
 ## Photos
 
-<img src="https://www.media-underground.net/images/evil_portable01.jpg">
-<img src="https://www.media-underground.net/images/evil_portable02.jpg">
-<img src="https://www.media-underground.net/images/evil_portable03.jpg">
+<img src="https://raw.githubusercontent.com/P5YB3RN4UT/ESP32-Evil-Portable/master/img/evil_portable01.jpg">
+<img src="https://raw.githubusercontent.com/P5YB3RN4UT/ESP32-Evil-Portable/master/img/evil_portable02.jpg">
+<img src="https://raw.githubusercontent.com/P5YB3RN4UT/ESP32-Evil-Portable/master/img/evil_portable03.jpg">
 
-[![WDGWars](https://wdgwars.pl/card/345-4HN42QTP.svg)](https://wdgwars.pl/)
